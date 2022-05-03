@@ -66,6 +66,10 @@ Se usa para envenenar trafico
 
 > sudo responder -I ens224 
 
+## Ruta donde se guardan los logs
+
+> /usr/share/responder/logs
+
 ## Crack Passwords 
 
 >hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.txt   
@@ -73,6 +77,8 @@ Se usa para envenenar trafico
 # Grep saber archivos donde se encontro la palabra
 
 >grep -l palabra_a_buscar ./*
+
+## Inveigh
 
 
 
