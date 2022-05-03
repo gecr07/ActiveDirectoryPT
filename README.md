@@ -1,5 +1,10 @@
 # Active Directory Pentest
 
+Having SYSTEM-level access within a domain environment is nearly equivalent to having a domain user account.
+
+##fully qualified domain name for the host
+
+<name.domain>
 
 
 ## Wireshark 
@@ -30,6 +35,31 @@ Here we'll start fping with a few flags: a to show targets that are alive, s to 
 ## User Listas generadores 
 
 >https://github.com/insidetrust/statistically-likely-usernames
+
+
+## Kerbrute 
+
+Para checar usuarios validos se usa contra DC por ejemplo se prueba el usuario jsmith recuerda que tiene que tener el kerberos activado puerto 88.
+
+>kerbrute userenum -d INLANEFREIGHT.LOCAL --dc 172.16.5.5 jsmith.txt -o valid_ad_users
+
+# Poison the Network
+
+## LLMNR & NBT-NS Primer
+
+Link-Local Multicast Name Resolution (LLMNR) and NetBIOS Name Service (NBT-NS) are Microsoft Windows components that serve as alternate methods of host identification that can be used when DNS fails. If a machine attempts to resolve a host but DNS resolution fails, typically, the machine will try to ask all other machines on the local network for the correct host address via LLMNR. LLMNR is based upon the Domain Name System (DNS) format and allows hosts on the same local link to perform name resolution for other hosts. It uses port 5355 over UDP natively. If LLMNR fails, the NBT-NS will be used. NBT-NS identifies systems on a local network by their NetBIOS name. NBT-NS utilizes port 137 over UDP.
+
+
+
+
+# Hashes 
+
+## NTLMv2
+
+Se puede crackear offline
+
+
+
 
 
 
