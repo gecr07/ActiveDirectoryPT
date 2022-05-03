@@ -66,6 +66,14 @@ Se usa para envenenar trafico
 
 > sudo responder -I ens224 
 
+## Crack Passwords 
+
+>hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.txt   
+
+# Grep saber archivos donde se encontro la palabra
+
+>grep -l palabra_a_buscar ./*
+
 
 
 
