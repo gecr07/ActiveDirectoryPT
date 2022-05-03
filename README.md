@@ -2,7 +2,7 @@
 
 Having SYSTEM-level access within a domain environment is nearly equivalent to having a domain user account.
 
-##fully qualified domain name for the host
+## fully qualified domain name for the host
 
 <name.domain>
 
@@ -54,11 +54,17 @@ Link-Local Multicast Name Resolution (LLMNR) and NetBIOS Name Service (NBT-NS) a
 
 # Hashes 
 
+NTLMv1 and NTLMv2 are authentication protocols that utilize the LM or NT hash.  NetNTLMv2 hashes are very useful once cracked, but ***cannot be used*** for techniques such as ***pash-the-hash***.
+
 ## NTLMv2
 
 Se puede crackear offline
 
+# RESPONDER
 
+Se usa para envenenar trafico
+
+> sudo responder -I ens224 
 
 
 
