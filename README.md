@@ -6,6 +6,10 @@ Having SYSTEM-level access within a domain environment is nearly equivalent to h
 
 <name.domain>
 
+## GUID
+
+What is an LDAP GUID?
+In order to efficiently use an LDAP server, it must be possible to uniquely identify LDAP objects. GUID (global universal identifier) attributes can be used as unique identifier for an LDAP object. 
 
 ## Wireshark 
 
@@ -79,6 +83,78 @@ Se usa para envenenar trafico
 >grep -l palabra_a_buscar ./*
 
 ## Inveigh
+Inveigh.exe es la que yo pude usar relativamente mas facil.
+
+# Password Policies
+
+## Con living of land Windows
+
+Para sacar el Password policy
+
+> net accounts
+
+## PowerShell
+
+Saca la misma info que net accounts
+
+>PS C:\> import-module .\PowerView.ps1
+>PS C:\> Get-DomainPolicy
+
+En algunos casos PowerView te saca informacion de PasswordComplexity=1 la cual brinda detalles de como debe de ser el password.
+
+>Password complexity is enabled, meaning that a user must choose a password with 3/4 of the following: an uppercase letter, lowercase letter, number, special character (Password1 or Welcome1 would satisfy the "complexity" requirement here, but are still clearly weak passwords).
+
+
+## Enumerating the Password Policy - from Linux - Credentialed
+
+Con esto se puede sacar infromacion como por ejemplo min password length tiempo de bloqueo y intentos antes del bloqueo(This security setting determines the number of failed logon attempts that are allowed before a user account is locked out.) esto se realiza Con credenciales validas.
+
+>crackmapexec smb 172.16.5.5 -u avazquez -p Password123 --pass-pol
+
+
+## Enumerating the Password Policy
+
+Se puede enumerar mediente SMB NULL session ( SMB NULL sessions allow an unauthenticated attacker to retrieve information from the domain, such as a complete listing of users, groups, computers, user account attributes, and the domain password policy) o LDAP anonymous bind.
+
+### Heramientas usadas para este fin de enumerar sesiones nulas etc.
+
+enum4linux, CrackMapExec, rpcclient(querydominfo).
+
+We can use rpcclient to check a Domain Controller for SMB NULL session access.
+
+## Session nula rpcclient
+
+> rpcclient -U "" -N 172.16.5.5
+
+> rpcclient $> querydominfo
+
+> rpcclient $> getdompwinfo
+
+## Usando enum4linux 
+
+> enum4linux -P 172.16.5.5
+
+> enum4linux-ng -P 172.16.5.5 -oA ilfreight  #Enum4linux-ng provided us with a bit clearer output and handy JSON and YAML output using the -oA flag.
+
+## Enumerating the Password Policy - from Linux - LDAP Anonymous Bind
+
+With an LDAP anonymous bind, we can use LDAP-specific enumeration tools such as windapseach.py, ldapsearch, ad-ldapdomaindump.py, etc., to pull the password policy. With ldapsearch, it can be a bit cumbersome but doable. One example command to get the password policy is as follows:
+
+> ldapsearch -h 172.16.5.5 -x -b "DC=INLANEFREIGHT,DC=LOCAL" -s sub "*" | grep -m 1 -B 10 pwdHistoryLength
+
+
+## Account lockout threshold
+
+### Account lockout threshold	0  Y Account lockout duration	Not set
+
+En cuantos intentos se bloquea la cuenta usalmente valores de 5 o 3. Pero si tienen 0 pasa que:
+
+>Configure the Account lockout threshold setting to 0. This configuration ensures that accounts will not be locked out, and will prevent a DoS attack that intentionally attempts to lock out accounts. This configuration also helps reduce help desk calls because users cannot accidentally lock themselves out of their accounts. Because it will not prevent a brute force attack, this configuration should only be chosen if both of the following criteria are explicitly met:
+The password policy requires all users to have complex passwords of 8 or more characters.
+A robust audit mechanism is in place to alert administrators when a series of failed logons occur in the environment. For example, the auditing solution should monitor for security event 539, which is a logon failure; this event identifies that there was a lock on the account at the time of the logon attempt.
+
+
+
 
 
 
