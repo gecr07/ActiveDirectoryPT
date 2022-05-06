@@ -1,6 +1,7 @@
 # Active Directory Pentest
 
 Having SYSTEM-level access within a domain environment is nearly equivalent to having a domain user account.
+The default Minimum password length when a new domain is created is 7
 
 ## fully qualified domain name for the host
 
