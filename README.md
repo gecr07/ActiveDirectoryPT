@@ -155,7 +155,21 @@ The password policy requires all users to have complex passwords of 8 or more ch
 A robust audit mechanism is in place to alert administrators when a series of failed logons occur in the environment. For example, the auditing solution should monitor for security event 539, which is a logon failure; this event identifies that there was a lock on the account at the time of the logon attempt.
 
 
+## Sesiones Nulas para identificar usuarios
 
+> enum4linux -U 172.16.5.5  | grep "user:" | cut -f2 -d"[" | cut -f1 -d"]"
+
+De existir una sesion nula nos conectamos con rpclient y enumeramos los usuarios
+
+> rpcclient -U "" -N 172.16.5.5
+
+> enumdomusers 
+
+> crackmapexec smb 172.16.5.5 --users
+
+***Quiza esto se podria autoatizar con bash para buscar en todas las direcciones IPs vivas***
+
+> ./windapsearch.py --dc-ip 172.16.5.5 -u "" -U
 
 
 
