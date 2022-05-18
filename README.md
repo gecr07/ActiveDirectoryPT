@@ -194,5 +194,79 @@ De existir una sesion nula nos conectamos con rpclient y enumeramos los usuarios
 >sudo crackmapexec smb 172.16.5.5 -u valid_users.txt -p Password123 | grep + # la lista debe de ser solo el nombre de usuario ejemplo mvazquez
 
 
+# Hashes
+
+Antes de profundizar en los detalles técnicos, revisemos NTLM Relaying y describamos las condiciones necesarias para la explotación. Windows New Technology Lan Manager (NTLM) es un conjunto de protocolos de seguridad que ofrece Microsoft para autenticar y autorizar usuarios en computadoras con Windows. NTLM es un protocolo de estilo de desafío/respuesta en el que el resultado es un Hash Net-NTLMv1 o v2. Este hash es un recurso relativamente bajo para descifrarlo, pero cuando se siguen fuertes políticas de seguridad de contraseñas largas y aleatorias, se mantiene bien. Sin embargo, los hashes Net-NTLM no se pueden usar para ataques Pass-The-Hash (PTH), solo los hashes NTLM locales en la propia máquina víctima.
+
+Cuado atacas AD los passwords pueden guardarse de todas esta maneras dependiendo de que tan viejo sea el dominio. Aunque no confundir porque tambien existe la autenticacion por los protocolos NTLM NTLMv1 NTLMv2 los cuales usan estos hashes y de ahi viene una confucion.
+
+## LM
+
+Los hashes mas viejitos. LM was turned off by default starting in Windows Vista/Server 2008, but might still linger in a network if there older systems are still used. It is possible to enable it in later versions through a GPO setting (even Windows 2016/10).
+
+***Example***
+
+>299BD128C1101FD6
+
+### Crack
+
+With hashcat
+
+```bash
+john --format=lm hash.txt
+hashcat -m 3000 -a 3 hash.txt
+
+```
+
+## NTHash o NTLM hash
+
+Ya es un poco mas reciente se puede sacar  by dumping the SAM database, or using Mimikatz.
+NTLM hashes are stored in the Security Account Manager (SAM) database and in Domain Controller's NTDS.dit database. They look like this:
+
+***Example***
+> B4B9B02E6F09A9BD760F388B67351E2B
+> aad3b435b51404eeaad3b435b51404ee:e19ccf75ee54e06b06a5907af13cef42
+
+Contrary to what you'd expect, the LM hash is the one before the semicolon and the NT hash is the one after the semicolon. Starting with Windows Vista and Windows Server 2008, by default, only the NT hash is stored
+
+### Crack
+
+
+```bash
+john --format=nt hash.txt
+hashcat -m 1000 -a 3 hash.txt
+
+```
+## NTLMv1
+
+The NTLM protocol uses the NTHash in a challenge/response between a server and a client. Por lo tanto se puede usar el ***responder*** para poder obtener estos passwords.  The v1 of the protocol uses both the NT and LM hash, depending on configuration and what is available. 
+
+Net-NTLM hashes are used for network authentication (they are derived from a challenge/response algorithm and are based on the user's NT hash). Here's an example of a Net-NTLMv2 (a.k.a NTLMv2) hash:
+
+***Example***
+
+>u4-netntlm::kNS:338d08f8e26de93300000000000000000000000000000000:9526fb8c23a90751cdd619b6cea564742e1e4bf33006ba41:cb8086049ec4736c
+
+
+
+```bash
+john --format=netntlm hash.txt
+hashcat -m 5500 -a 3 hash.txt
+
+```
+
+## NTLMv2
+
+This is the new and improved version of the NTLM protocol, which makes it a bit harder to crack. The concept is the same as NTLMv1, only different algorithm and responses sent to the server. Also captured through Responder or similar. Default in Windows since Windows 2000.
+
+***Example***
+
+> admin::N46iSNekpT:08ca45b7d7ea58ee:88dcbe4446168966a153a0064958dac6:5c7830315c7830310000000000000b45c67103d07d7b95acd12ffa11230e0000000052920b85f78d013c31cdb3b92f5d765c783030
+
+```bash
+john --format=netntlmv2 hash.txt
+hashcat -m 5600 -a 3 hash.txt
+
+```
 
 
