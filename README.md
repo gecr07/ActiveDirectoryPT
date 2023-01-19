@@ -99,10 +99,20 @@ Leaf objects do not contain other objects and are found at the end of the subtre
 A GUID is a unique 128-bit value assigned when a domain user or group is created. This GUID value is unique across the enterprise, similar to a MAC address.
 The GUID is stored in the ObjectGUID attribute.Searching in Active Directory by GUID value is probably the most accurate and reliable way to find the exact object you are looking for.
 
-#### Security principals
+#### Security principals ( todo lo que se pueda autenticar)
 
 Security principals are anything that the operating system can authenticate, including users, computer accounts, or even threads/processes that run in the context of a user or computer account (i.e., an application such as Tomcat running in the context of a service account within the domain). In AD, security principles are domain objects that can manage access to other resources within the domain. We can also have local user accounts and security groups used to control access to resources on only that specific computer. These are not managed by AD but rather by the Security Accounts Manager (SAM).
 
+
+#### Security Identifier (SID) 
+
+Un identificador de seguridad (SID) es un valor único de longitud variable que se utiliza para identificar un principal de seguridad o un grupo de seguridad en sistemas operativos Windows. Los SID conocidos son un grupo de SID que identifican usuarios o grupos genéricos. El Everyone group tiene un SID conocido y asi hay varios ya establecidos 
+
+Para mayores detalles consulta 
+
+> https://ldapwiki.com/wiki/Well-known%20Security%20Identifiers
+
+#### 
 
 
 # Active Directory Pentest
