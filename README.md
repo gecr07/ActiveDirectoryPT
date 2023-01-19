@@ -12,7 +12,7 @@ Mas tarde con la llegada de Windows 2008 se introdujo *** Active Directory Feder
 
 ### Windows Server 2016
 
-Con la llegada de este SO hubo multiples mejoras en la seguridad como las cuentas ***Group Managed Service Accounts (gMSA)*** que son cuentas de servicio que se usan por ejemplo para correr alguna tarea ( o asi lo entiendo yo )
+Con la llegada de este SO hubo multiples mejoras en la seguridad como las cuentas ***Group Managed Service Accounts (gMSA)*** que son cuentas de servicio que se usan por ejemplo para correr alguna tarea ( o asi lo entiendo yo ). Se incorporo la capacidad para migrar a la nube con ayuda de Azure AD Connect.
 
 > Group managed service accounts (gMSAs) are managed domain accounts that you use to help secure services. gMSAs can run on a single server or on a server farm, such as systems behind a network load balancing or Internet Information Services (IIS) server. After you configure your services to use a gMSA principal, password management for that account is handled by the Windows operating system.
 
@@ -20,9 +20,28 @@ Con la llegada de este SO hubo multiples mejoras en la seguridad como las cuenta
 
 
 
+## Active Directory Structure
+
+***Active Directory (AD)*** es un servicio de directorio para entornos de red de Windows ( aunque ya me parece que se podrian incluir maquinas linux). Sirven para manejar recursos como: users, computers, groups, network devices and file shares, group policies, servers and workstations, and trusts.  ***Active Directory Domain Services (AD DS)*** se encarga de guardar los users y passwords dando autorizacion para dar acceso o no a la informacion o recursos. 
+
+
 > La cuenta de usuario de AD sin privilegios adicionales puede enumerar la mayoría de los objetos dentro de AD. Este hecho hace que sea extremadamente importante proteger adecuadamente una implementación de AD porque CUALQUIER cuenta de usuario, independientemente de su nivel de privilegio, puede usarse para enumerar el dominio y buscar errores de configuración y fallas a fondo.
 
+## Check List de Cosas a Enumerar con Usuario sin Priv ( pueden ser mas estas son solo algunas) 
 
+1. Domain Computers	Domain Users
+
+
+2. Domain Group Information	Organizational Units (OUs)
+
+
+3. Default Domain Policy	Functional Domain Levels
+
+
+4. Password Policy	Group Policy Objects (GPOs)
+
+
+5. Domain Trusts	Access Control Lists (ACLs)
 
 
 # Active Directory Pentest
