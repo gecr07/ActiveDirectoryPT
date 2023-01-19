@@ -1,10 +1,27 @@
 # Conceptos Basicos
 
-> La cuenta de usuario de AD sin privilegios adicionales puede enumerar la mayoría de los objetos dentro de AD. Este hecho hace que sea extremadamente importante proteger adecuadamente una implementación de AD porque CUALQUIER cuenta de usuario, independientemente de su nivel de privilegio, puede usarse para enumerar el dominio y buscar errores de configuración y fallas a fondo.
 
 LDAP es la base en la que se baso Active Directory y fue introducido en 1971 y mas tarde se creo AD ya por los 90s. Para cuando salio windows 2003 se introdujo un nuevo concepto llamado ***FOREST*** El cual no es mas que:
 
 > Característica, que permite a los administradores de sistemas crear "contenedores" de dominios, usuarios, computadoras y otros objetos separados, todo bajo el mismo paraguas
+
+Mas tarde con la llegada de Windows 2008 se introdujo *** Active Directory Federation Services (ADFS)*** lo que permitia a los usuarios usar el SSO y con eso hizo mas facil el inicio de sesion. ( dice que en la misma LAN supongo que era una restriccion del mismo por ser nuevo)
+
+>ADFS enables users to access applications across organizational boundaries using a single set of credentials. ADFS uses the claims-based Access Control Authorization model, which attempts to ensure security across applications by identifying users by a set of claims related to their identity, which are packaged into a security token by the identity provider.
+
+
+### Windows Server 2016
+
+Con la llegada de este SO hubo multiples mejoras en la seguridad como las cuentas ***Group Managed Service Accounts (gMSA)*** que son cuentas de servicio que se usan por ejemplo para correr alguna tarea ( o asi lo entiendo yo )
+
+> Group managed service accounts (gMSAs) are managed domain accounts that you use to help secure services. gMSAs can run on a single server or on a server farm, such as systems behind a network load balancing or Internet Information Services (IIS) server. After you configure your services to use a gMSA principal, password management for that account is handled by the Windows operating system.
+
+> gMSA offers a more secure way to run specific automated tasks, applications, and services and is often a recommended mitigation against the infamous Kerberoasting attack.
+
+
+
+> La cuenta de usuario de AD sin privilegios adicionales puede enumerar la mayoría de los objetos dentro de AD. Este hecho hace que sea extremadamente importante proteger adecuadamente una implementación de AD porque CUALQUIER cuenta de usuario, independientemente de su nivel de privilegio, puede usarse para enumerar el dominio y buscar errores de configuración y fallas a fondo.
+
 
 
 
