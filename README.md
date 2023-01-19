@@ -78,6 +78,32 @@ Todos los objetos tienen atributos que son informacion para manejarlos ejemplo u
 
 The Active Directory schema is essentially the blueprint of any enterprise environment. Define como en una base de datos como esta conformados los datos por ejemplo: ahi se define porque un objeto computer tiene
 
+#### Domain
+
+A domain is a logical group of objects such as computers, users, OUs, groups, etc. We can think of each domain as a different city within a state or country. Domains can operate entirely independently of one another or be connected via trust relationships.
+
+#### Forest
+
+A forest is a collection of Active Directory domains. It is the topmost container and contains all of the AD objects introduced below, including but not limited to domains, users, groups, computers, and Group Policy objects. A forest can contain one or multiple domains and be thought of as a state in the US or a country within the EU. Each forest operates independently but may have various trust relationships with other forests.
+
+#### Tree
+
+A tree is a collection of Active Directory domains that begins at a single root domain. A forest is a collection of AD trees. Each domain in a tree shares a boundary with the other domains. A parent-child trust relationship is formed when a domain is added under another domain in a tree. Two trees in the same forest cannot share a name (namespace). Let's say we have two trees in an AD forest: inlanefreight.local and ilfreight.local. A child domain of the first would be corp.inlanefreight.local while a child domain of the second could be corp.ilfreight.local. All domains in a tree share a standard Global Catalog which contains all information about objects that belong to the tree.
+
+#### Leaf
+
+Leaf objects do not contain other objects and are found at the end of the subtree hierarchy.
+
+### Global Unique Identifier (GUID) IMPORTANTE ( The GUID is stored in the ObjectGUID attribute)
+
+A GUID is a unique 128-bit value assigned when a domain user or group is created. This GUID value is unique across the enterprise, similar to a MAC address.
+The GUID is stored in the ObjectGUID attribute.Searching in Active Directory by GUID value is probably the most accurate and reliable way to find the exact object you are looking for.
+
+#### Security principals
+
+Security principals are anything that the operating system can authenticate, including users, computer accounts, or even threads/processes that run in the context of a user or computer account (i.e., an application such as Tomcat running in the context of a service account within the domain). In AD, security principles are domain objects that can manage access to other resources within the domain. We can also have local user accounts and security groups used to control access to resources on only that specific computer. These are not managed by AD but rather by the Security Accounts Manager (SAM).
+
+
 
 # Active Directory Pentest
 
