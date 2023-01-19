@@ -49,15 +49,34 @@ Dicho en mis palabras es un contenedor de objetos lo de build ins es porque tu p
 
 > An organizational unit (OU) is a container within a Microsoft Active Directory domain which can hold users, groups and computers. It is the smallest unit to which an administrator can assign Group Policy settings or account permissions.
 
-## Ejemplo de un Forest
+### Ejemplo de un Forest
 
 El forest es un contenedor un limite por asi decirlo todos los objetos se encuentran bajo control administrativo. En AD todo se consideran objetos. Active Directory está organizado en una estructura de árbol jerárquico en la imagen de abajo vemos como se encuentra organizado un Forest. Un dominio es una estructura dentro de la cual se puede acceder a los objetos contenidos (usuarios, computadoras y grupos).
 
 ![image](https://user-images.githubusercontent.com/63270579/213518640-b11607c7-abcb-44f8-9fe5-c4ad71ebd37f.png)
 
-Hasta arriba tenemos el Forest el cual puede contener uno o mas dominios a su ves esto dominios pueden tener subdominios ( child or sub-domains).  A domain is a structure within which contained objects (users, computers, and groups) are accessible. 
+Hasta arriba tenemos el Forest/Dominio el cual puede contener uno o mas dominios a su ves esto dominios pueden tener subdominios ( child or sub-domains).  A domain is a structure within which contained objects (users, computers, and groups) are accessible. 
+
+> Aquí podríamos decir que INLANEFREIGHT.LOCAL es el dominio raíz y contiene los subdominios (ya sean dominios secundarios o raíz de árbol) ADMIN.INLANEFREIGHT.LOCAL, CORP.INLANEFREIGHT.LOCAL y DEV.INLANEFREIGHT.LOCAL, así como los otros objetos que hacen configurar un dominio como usuarios, grupos, computadoras y más, como veremos en detalle a continuación. Es común ver varios dominios (o bosques) vinculados mediante relaciones de confianza en organizaciones que realizan muchas adquisiciones. A menudo, es más rápido y más fácil crear una relación de confianza con otro dominio/bosque que volver a crear todos los usuarios nuevos en el dominio actual. Como veremos en módulos posteriores, las confianzas de dominio pueden presentar una serie de problemas de seguridad si no se administran adecuadamente.
+
+### Trust between the two forests
+
+Se configuran relaciones de confianza entre Forest/Dominios esto para evitar volver a crear todos los usuarios nuevos en el dominio actual. NOTA aunque exista relacion de confianza bidireccional para los subdominos de mas abajo se necesitara una relacion de confianza mas para que los usuariio de un subdominio puedan autenticarse en el otro subdominio.
+
+## Active Directory Terminology
+
+#### Objeto
+
+Se considera todo dentro de AD incluso las OU son objetos ( aunque para entenderlo mejor se puede decir que son contenedores).
 
 
+#### Attributes
+
+Todos los objetos tienen atributos que son informacion para manejarlos ejemplo un objeto computadora tiene hostname y DNS name. Todos los objetos tambien tienen por defecto atributos de LDAP 
+
+#### Schema
+
+The Active Directory schema is essentially the blueprint of any enterprise environment. Define como en una base de datos como esta conformados los datos por ejemplo: ahi se define porque un objeto computer tiene
 
 
 # Active Directory Pentest
