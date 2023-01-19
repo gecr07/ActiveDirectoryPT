@@ -29,19 +29,35 @@ Con la llegada de este SO hubo multiples mejoras en la seguridad como las cuenta
 
 ## Check List de Cosas a Enumerar con Usuario sin Priv ( pueden ser mas estas son solo algunas) 
 
-1. Domain Computers	Domain Users
+1. Domain Computers,	Domain Users
 
 
-2. Domain Group Information	Organizational Units (OUs)
+2. Domain Group Information,	Organizational Units (OUs)
 
 
-3. Default Domain Policy	Functional Domain Levels
+3. Default Domain Policy,	Functional Domain Levels
 
 
-4. Password Policy	Group Policy Objects (GPOs)
+4. Password Policy	Group, Policy Objects (GPOs)
 
 
-5. Domain Trusts	Access Control Lists (ACLs)
+5. Domain Trusts,	Access Control Lists (ACLs)
+
+## Organization Units
+
+Dicho en mis palabras es un contenedor de objetos lo de build ins es porque tu puedes crear tus propios contenedores OU o usar los que vienen por defecto por eso son build in. Se puede decir que el dominio en si es un container pero es tiene mayor gerarquia ( top level container). Incluso una OU puede contener una sub OU.
+
+> An organizational unit (OU) is a container within a Microsoft Active Directory domain which can hold users, groups and computers. It is the smallest unit to which an administrator can assign Group Policy settings or account permissions.
+
+## Ejemplo de un Forest
+
+El forest es un contenedor un limite por asi decirlo todos los objetos se encuentran bajo control administrativo. En AD todo se consideran objetos. Active Directory está organizado en una estructura de árbol jerárquico en la imagen de abajo vemos como se encuentra organizado un Forest. Un dominio es una estructura dentro de la cual se puede acceder a los objetos contenidos (usuarios, computadoras y grupos).
+
+![image](https://user-images.githubusercontent.com/63270579/213518640-b11607c7-abcb-44f8-9fe5-c4ad71ebd37f.png)
+
+Hasta arriba tenemos el Forest el cual puede contener uno o mas dominios a su ves esto dominios pueden tener subdominios ( child or sub-domains).  A domain is a structure within which contained objects (users, computers, and groups) are accessible. 
+
+
 
 
 # Active Directory Pentest
