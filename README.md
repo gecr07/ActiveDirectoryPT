@@ -1,3 +1,13 @@
+# Conceptos Basicos
+
+> La cuenta de usuario de AD sin privilegios adicionales puede enumerar la mayoría de los objetos dentro de AD. Este hecho hace que sea extremadamente importante proteger adecuadamente una implementación de AD porque CUALQUIER cuenta de usuario, independientemente de su nivel de privilegio, puede usarse para enumerar el dominio y buscar errores de configuración y fallas a fondo.
+
+LDAP es la base en la que se baso Active Directory y fue introducido en 1971 y mas tarde se creo AD ya por los 90s. Para cuando salio windows 2003 se introdujo un nuevo concepto llamado ***FOREST*** El cual no es mas que:
+
+> Característica, que permite a los administradores de sistemas crear "contenedores" de dominios, usuarios, computadoras y otros objetos separados, todo bajo el mismo paraguas
+
+
+
 # Active Directory Pentest
 
 Having SYSTEM-level access within a domain environment is nearly equivalent to having a domain user account.
