@@ -159,7 +159,7 @@ Es una coleccion virtual de politicas osea un cojunto de politicas.
 
 > Group Policy Objects (GPOs) are virtual collections of policy settings. Each GPO has a unique GUID. A GPO can contain local file system settings or Active Directory settings. GPO settings can be applied to both user and computer objects. They can be applied to all users and computers within the domain or defined more granularly at the OU level.
 
-
+## Access Control List (ACL) y Access Control Entities (ACEs)
 
 
 # Active Directory Pentest
