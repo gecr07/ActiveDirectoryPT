@@ -103,6 +103,9 @@ The GUID is stored in the ObjectGUID attribute.Searching in Active Directory by 
 
 Security principals are anything that the operating system can authenticate, including users, computer accounts, or even threads/processes that run in the context of a user or computer account (i.e., an application such as Tomcat running in the context of a service account within the domain). In AD, security principles are domain objects that can manage access to other resources within the domain. We can also have local user accounts and security groups used to control access to resources on only that specific computer. These are not managed by AD but rather by the Security Accounts Manager (SAM).
 
+Fuente: Microsoft
+
+> Security principals that are created in an Active Directory domain are Active Directory objects, which can be used to manage access to domain resources. Each security principal is assigned a unique identifier, which it retains for its entire lifetime. Local user accounts and security groups are created on a local computer, and they can be used to manage access to resources on that computer. Local user accounts and security groups are managed by the Security Accounts Manager (SAM) on the local computer.
 
 #### Security Identifier (SID) 
 
@@ -161,6 +164,71 @@ Es una coleccion virtual de politicas osea un cojunto de politicas.
 
 ## Access Control List (ACL) y Access Control Entities (ACEs)
 
+Las listas ACL contienen ACEs definen en un objeto permisos para un usuario o grupo. Entonces la ACL son el contenedor principal las ACEs con lo que hay adentro.
+
+> Access privileges for resources in Active Directory Domain Services are usually granted through the use of an access control entry (ACE). An ACE defines an access or audit permission on an object for a specific user or group. An access-control list (ACL) is the ordered collection of access control entries defined for an object.
+
+
+## Discretionary Access Control List (DACL)
+
+> DACLs define which security principles are granted or denied access to an object; it contains a list of ACEs. When a process tries to access a securable object, the system checks the ACEs in the object's DACL to determine whether or not to grant access. If an object does NOT have a DACL, then the system will grant full access to everyone, but if the DACL has no ACE entries, the system will deny all access attempts. ACEs in the DACL are checked in sequence until a match is found that allows the requested rights or until access is denied.
+
+## Fully Qualified Domain Name (FQDN) 
+
+Ya sabes el nombre completo DC01.INLANEFREIGHT.LOCAL. dentro del dominio.
+
+##Tombstone
+
+Es como la papelera de reciclaje
+
+> A tombstone is a container object in AD that holds deleted AD objects. When an object is deleted from AD, the object remains for a set period of time known as the Tombstone Lifetime, and the isDeleted attribute is set to TRUE. Once an object exceeds the Tombstone Lifetime, it will be entirely removed. Microsoft recommends a tombstone lifetime of 180 days to increase the usefulness of backups, but this value may differ across environments. Depending on the DC operating system version, this value will default to 60 or 180 days. If an object is deleted in a domain that does not have an AD Recycle Bin, it will become a tombstone object. When this happens, the object is stripped of most of its attributes and placed in the Deleted Objects container for the duration of the tombstoneLifetime. It can be recovered, but any attributes that were lost can no longer be recovered.
+
+## AD Recycle Bin ( preserva los atributos de los objetos borrados)
+
+Cuando se tiene habilitado esto los objetos que se borran van aqui si no se tiene ahora si se van a la Tombstone( si esto pasa los atributos del objeto se borran).
+
+## SYSVOL
+Base de datos con informacion importante como: system policies, Group Policy settings, logon/logoff scripts, and often contains other types of scripts that are executed to perform various tasks in the AD environment. en inclusive passwords de usuarios se encrypta con AES pero los passwords son publicos :O 
+
+> https://infosecwriteups.com/attacking-gpp-group-policy-preferences-credentials-active-directory-pentesting-16d9a65fa01a
+
+## AdminSDHolder
+
+The purpose of the AdminSDHolder object is to provide "template" permissions for the protected accounts and groups in the domain. AdminSDHolder is automatically created as an object in the System container of every Active Directory domain. Its path is: CN=AdminSDHolder,CN=System,DC=<domain_component>,DC=<domain_component>?.
+
+## DS-Heuristics attribute
+
+Contains global settings for the entire forest.
+
+## SDProp
+
+SDProp is a process that runs every 60 minutes (by default) on the domain controller that holds the domain's PDC Emulator (PDCE). SDProp compares the permissions on the domain's AdminSDHolder object with the permissions on the protected accounts and groups in the domain. If the permissions on any of the protected accounts and groups do not match the permissions on the AdminSDHolder object, the permissions on the protected accounts and groups are reset to match those of the domain's AdminSDHolder object.
+
+## adminCount attribute
+
+The adminCount attribute determines whether or not the SDProp process protects a user. If the value is set to 0 or not specified, the user is not protected. If the attribute value is set to value, the user is protected. Attackers will often look for accounts with the adminCount attribute set to 1 to target in an internal environment. These are often privileged accounts and may lead to further access or full domain compromise.
+
+## Active Directory Users and Computers (ADUC)
+
+is a GUI console commonly used for managing users, groups, computers, and contacts in AD. Changes made in ADUC can be done via PowerShell as well.
+
+![image](https://user-images.githubusercontent.com/63270579/213801811-cf247af1-9e54-44f9-aafb-ed1042873f6b.png)
+
+
+## ADSI Edit
+
+![image](https://user-images.githubusercontent.com/63270579/213802177-a2949beb-9b20-4afa-a887-ec9b0db1f5a0.png)
+
+
+ADSI Edit es una herramienta GUI utilizada para administrar objetos en AD. Brinda acceso a mucho más de lo que está disponible en ADUC y se puede usar para establecer o eliminar cualquier atributo disponible en un objeto, agregar, eliminar y mover objetos también. Es una herramienta poderosa que permite al usuario acceder a AD a un nivel mucho más profundo. Se debe tener mucho cuidado al usar esta herramienta, ya que los cambios aquí podrían causar problemas importantes en AD.
+
+## sIDHistory
+
+This attribute holds any SIDs that an object was assigned previously. It is usually used in migrations so a user can maintain the same level of access when migrated from one domain to another. 
+
+# NTDS.DIT ( Las Joyas de la corona)
+
+The NTDS.DIT file can be considered the heart of Active Directory. It is stored on a Domain Controller at C:\Windows\NTDS\ and is a database that stores AD data such as information about user and group objects, group membership, and, most important to attackers and penetration testers, the password hashes for all users in the domain. Once full domain compromise is reached, an attacker can retrieve this file, extract the hashes, and either use them to perform a pass-the-hash attack or crack them offline using a tool such as Hashcat to access additional resources in the domain. If the setting Store password with reversible encryption is enabled, then the NTDS.DIT will also store the cleartext passwords for all users created or who changed their password after this policy was set. While rare, some organizations may enable this setting if they use applications or protocols that need to use a user's existing password (and not Kerberos) for authentication.
 
 # Active Directory Pentest
 
