@@ -112,7 +112,54 @@ Para mayores detalles consulta
 
 > https://ldapwiki.com/wiki/Well-known%20Security%20Identifiers
 
-#### 
+#### Distinguished Name (DN) y Relative Distinguished Name (RDN)
+
+El DN es fully qualified path dicho en otras palabras describes the full path to an object in AD (such as cn=bjones, ou=IT, ou=Employees, dc=inlanefreight, dc=local).
+Y el RDN es una parte solamente del DN eso quiere decir que podriamos difernciar ( cn=bjones, ou=dev) serian dos objetos diferentes 
+cn=common name ou=organization unit c=country entre otros.
+
+> A Distinguished Name (DN) describes the full path to an object in AD (such as cn=bjones, ou=IT, ou=Employees, dc=inlanefreight, dc=local). In this example, the user bjones works in the IT department of the company Inlanefreight, and his account is created in an Organizational Unit (OU) that holds accounts for company employees. The Common Name (CN) bjones is just one way the user object could be searched for or accessed within the domain.
+
+> A Relative Distinguished Name (RDN) is a single component of the Distinguished Name that identifies the object as unique from other objects at the current level in the naming hierarchy. In our example, bjones is the Relative Distinguished Name of the object. AD does not allow two objects with the same name under the same parent container, but there can be two objects with the same RDNs that are still unique in the domain because they have different DNs. For example, the object cn=bjones,dc=dev,dc=inlanefreight,dc=local would be recognized as different from cn=bjones,dc=inlanefreight,dc=local.
+
+#### sAMAccountName
+
+The sAMAccountName is the user's logon name. Here it would just be bjones. It must be a unique value and 20 or fewer characters.
+
+#### FSMO Roles
+
+Esto permite hacer cambios al dominio y anteriormente si el dc se caia ( el que estuviera cambiando cosas no se hacian los cambios) por estas razones se dividieron los roles.
+
+> There are five FMSO roles: Schema Master and Domain Naming Master (one of each per forest), Relative ID (RID) Master (one per domain), Primary Domain Controller (PDC) Emulator (one per domain), and Infrastructure Master (one per domain). All five roles are assigned to the first DC in the forest root domain in a new AD forest. Each time a new domain is added to a forest, only the RID Master, PDC Emulator, and Infrastructure Master roles are assigned to the new domain.  
+
+
+#### Global Catalog (A global catalog (GC) is a domain controller that stores copies of ALL objects in an Active Directory forest.)
+
+Los Dc solo guardan copias de lo que esta dentro de su dominio pero para que se puede acceder a objetos dentro del forest osea otros dominos se utiliza esto.
+
+> A global catalog (GC) is a domain controller that stores copies of ALL objects in an Active Directory forest. The GC stores a full copy of all objects in the current domain and a partial copy of objects that belong to other domains in the forest. Standard domain controllers hold a complete replica of objects belonging to its domain but not those of different domains in the forest. The GC allows both users and applications to find information about any objects in ANY domain in the forest. GC is a feature that is enabled on a domain controller and performs the following functions:
+
+> Authentication (provided authorization for all groups that a user account belongs to, which is included when an access token is generated)
+Object search (making the directory structure within a forest transparent, allowing a search to be carried out across all domains in a forest by providing just one attribute about an object.)
+
+#### Read-Only Domain Controller (RODC)
+
+A Read-Only Domain Controller (RODC) has a read-only Active Directory database.
+
+### Service Principal Name (SPN)
+
+Un SPN es un identificador único para un servicio en una red que utiliza la autenticación Kerberos.
+
+> A Service Principal Name (SPN) uniquely identifies a service instance. They are used by Kerberos authentication to associate an instance of a service with a logon account, allowing a client application to request the service to authenticate an account without needing to know the account name.
+
+## Group Policy Object (GPO)
+
+Es una coleccion virtual de politicas osea un cojunto de politicas.
+
+
+> Group Policy Objects (GPOs) are virtual collections of policy settings. Each GPO has a unique GUID. A GPO can contain local file system settings or Active Directory settings. GPO settings can be applied to both user and computer objects. They can be applied to all users and computers within the domain or defined more granularly at the OU level.
+
+
 
 
 # Active Directory Pentest
